@@ -13,11 +13,12 @@ lint:
     config-file: molecule/_rules/.yamllint
 
 platforms:
-  - name: Alpine35
-    image: lansible/alpine:3.5
-
-  - name: Alpine34
-    image: lansible/alpine:3.4
+# FIXME: plexupdate not yet compatible
+#  - name: Alpine35
+#    image: lansible/alpine:3.5
+#
+#  - name: Alpine34
+#    image: lansible/alpine:3.4
 
   - name: CentOS7
     image: lansible/centos:7
