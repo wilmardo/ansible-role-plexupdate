@@ -1,0 +1,44 @@
+---
+dist: trusty
+language: python
+sudo: required
+cache:
+  pip: true
+
+env:
+  global:
+    - fast_finish: true
+    - MAKEFLAGS="-j 2"
+    - SCENARIO=default
+
+matrix:
+  include:
+    - env: ANSIBLE_VERSION='<2.4.0'  # 2.3.x bugs and security
+    - env: ANSIBLE_VERSION='<2.5.0'  # 2.4.x bugs and security
+    - env: ANSIBLE_VERSION='<2.6.0'  # 2.5.x bugs and security
+    - env: ANSIBLE_VERSION=''  # Pre-releases
+
+  allow_failures:
+    - env: ANSIBLE_VERSION=''  # Pre-releases
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install --only-upgrade docker-ce -y
+
+install:
+  - if [ "$ANSIBLE_VERSION" ]; then pip install --pre ansible${ANSIBLE_VERSION};
+    else pip install ansible; fi
+  - pip install molecule docker-py
+  - ansible --version
+
+script:
+  - molecule test --scenario-name $SCENARIO
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  email:
+    on_failure: change
+    on_success: never
