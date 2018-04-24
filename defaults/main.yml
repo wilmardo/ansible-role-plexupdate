@@ -8,7 +8,7 @@ plexupdate_config_location: /etc/plexupdate.conf
 # Plexupdate interval (comply with cron.interval) (hourly, daily, weekly, monthly)
 plexupdate_interval: daily
 
-# Config options for plexupdate
+# Config options for plexupdate correspond to https://github.com/mrworf/plexupdate#advanced-options
 
 # If Plexupdate will automatically install newly downloaded version (adds crontab entry)
 plexupdate_autoinstall: true
