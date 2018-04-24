@@ -1,35 +1,35 @@
 ---
 - block:
-  - name: Ensure cron is installed for Redhat
-    package:
-      name: cronie
-      state: present
-    when: ansible_os_family == 'RedHat'
+    - name: Ensure cron is installed for Redhat
+      package:
+        name: cronie
+        state: present
+      when: ansible_os_family == 'RedHat'
 
-  - name: Create cron config
-    template:
-      src: plexupdate/plexupdate.cron.conf.j2
-      dest: "/etc/plexupdate.cron.conf"
+    - name: Create cron config
+      template:
+        src: plexupdate/plexupdate.cron.conf.j2
+        dest: "/etc/plexupdate.cron.conf"
 
-  - name: Create cron job
-    file:
-      src: "{{ plexupdate_install_location }}/extras/cronwrapper"
-      dest: "/etc/cron.{{ plexupdate_interval }}/plexupdate"
-      state: link
+    - name: Create cron job
+      file:
+        src: "{{ plexupdate_install_location }}/extras/cronwrapper"
+        dest: "/etc/cron.{{ plexupdate_interval }}/plexupdate"
+        state: link
 
   when: ansible_os_family != 'Alpine'
 
 - block:
-  - name: Start and enable crond
-    service:
-      name: crond
-      state: started
-      enabled: true
+    - name: Start and enable crond
+      service:
+        name: crond
+        state: started
+        enabled: true
 
-  - name: Create cron job
-    file:
-      src: "{{ plexupdate_install_location }}/extras/cronwrapper"
-      dest: "/etc/periodic/{{ plexupdate_interval }}"
-      state: link
+    - name: Create cron job
+      file:
+        src: "{{ plexupdate_install_location }}/extras/cronwrapper"
+        dest: "/etc/periodic/{{ plexupdate_interval }}"
+        state: link
 
   when: ansible_os_family == 'Alpine'
