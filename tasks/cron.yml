@@ -17,7 +17,7 @@
       dest: "/etc/cron.{{ plexupdate_interval }}/plexupdate"
       state: link
 
-  when: ansible_distribution != 'Alpine'
+  when: ansible_os_family != 'Alpine'
 
 - block:
   - name: Start and enable crond
@@ -32,4 +32,4 @@
       dest: "/etc/periodic/{{ plexupdate_interval }}"
       state: link
 
-  when: ansible_distribution == 'Alpine'
+  when: ansible_os_family == 'Alpine'
