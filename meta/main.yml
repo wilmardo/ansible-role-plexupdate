@@ -10,10 +10,7 @@ galaxy_info:
 
   platforms:
     - name: Alpine
-      versions:
-        - 3.5
-        - 3.4
-    - name: CentOS
+    - name: EL
       versions:
         - 7
         - 6
