@@ -1,4 +1,4 @@
 ---
-- include_tasks: plexupdate.yml
-- include_tasks: cron.yml
+- include: plexupdate.yml
+- include: cron.yml
   when: plexupdate_autoinstall or plexupdate_autoupdate
